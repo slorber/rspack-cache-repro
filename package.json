@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:webpack && npm run test:rspack",
+    "test:webpack": "BUNDLER=webpack node test.js",
+    "test:rspack": "BUNDLER=rspack node test.js"
   },
   "author": "",
   "license": "MIT",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@rspack/core": "^1.2.5",
+    "webpack": "^5.98.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.1"
+  }
 }
