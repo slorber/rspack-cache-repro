@@ -4,14 +4,14 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test:webpack && npm run test:rspack",
-    "test:webpack": "BUNDLER=webpack node test.js",
-    "test:rspack": "BUNDLER=rspack node test.js"
+    "test:webpack": "BUNDLER=webpack ./test.sh",
+    "test:rspack": "BUNDLER=rspack ./test.sh"
   },
   "author": "",
   "license": "MIT",
   "description": "",
   "dependencies": {
-    "@rspack/core": "^1.2.5",
+    "@rspack/core": "^1.2.7",
     "webpack": "^5.98.0"
   },
   "devDependencies": {

@@ -36,7 +36,7 @@ const compiler = bundler({
   module: {
     rules: [
       {
-        test: /\.(?:js|mjs|cjs)$/,
+        test: /\.js$/,
         use: {
           loader: "./utils/custom-js-loader.js",
         },
@@ -47,19 +47,27 @@ const compiler = bundler({
 
 async function runCompiler() {
   return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
-      }
-      if (stats.hasErrors()) {
-        reject(
-          new Error(
-            `stats error: ${JSON.stringify(stats.toJson().errors, null, 2)}`,
-          ),
-        );
-      }
-      resolve();
-    });
+    compiler.run(
+      (err, stats) => {
+        if (err) {
+          reject(err);
+        }
+        if (stats.hasErrors()) {
+          reject(
+            new Error(
+              `stats error: ${JSON.stringify(stats.toJson().errors, null, 2)}`,
+            ),
+          );
+        }
+        resolve();
+      },
+      /*
+      {
+        modifiedFiles: new Set(),
+        removedFiles: new Set(),
+      },
+         */
+    );
   });
 }
 
@@ -69,25 +77,7 @@ async function closeCompiler() {
   });
 }
 
-async function cleanupFsCaches() {
-  await fs.promises.rm("./node_modules/.cache", {
-    recursive: true,
-    force: true,
-  });
-}
-
-async function writeDynamicFile() {
-  await fs.promises.writeFile(
-    "./src/dynamicFile.js",
-    `
-// This file is not static, it's "code generated" before bundling
-export const dynamic = 42
-`,
-  );
-}
-
 async function bundleApp() {
-  await writeDynamicFile();
   console.log("");
   console.log("##########");
   console.log("Bundle App start");
@@ -104,12 +94,6 @@ async function runTest() {
   console.log(`# Using ${bundlerName}`.toUpperCase());
   console.log("#############");
   console.log("");
-
-  await cleanupFsCaches();
-
-  await bundleApp();
-
-  await bundleApp();
 
   await bundleApp();
 
