@@ -62,6 +62,7 @@ async function runCompiler() {
         resolve();
       },
       /*
+      No idea what to provide here...
       {
         modifiedFiles: new Set(),
         removedFiles: new Set(),
@@ -80,7 +81,7 @@ async function closeCompiler() {
 async function bundleApp() {
   console.log("");
   console.log("##########");
-  console.log("Bundle App start");
+  console.log(`Bundle App start - ${bundlerName.toUpperCase()}`);
   console.time("Bundle App");
   await runCompiler();
   console.timeEnd("Bundle App");
@@ -89,18 +90,8 @@ async function bundleApp() {
 
 async function runTest() {
   console.log("");
-  console.log("");
-  console.log("###############################################");
-  console.log(`# Using ${bundlerName}`.toUpperCase());
-  console.log("#############");
-  console.log("");
-
   await bundleApp();
-
   await closeCompiler();
-
-  console.log("");
-  console.log("SUCCESS");
   console.log("");
 }
 
