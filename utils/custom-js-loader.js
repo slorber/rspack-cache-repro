@@ -5,6 +5,10 @@ module.exports = async function customJsLoader(content) {
     require("path").relative(process.cwd(), this.resourcePath),
   );
 
+  this.addDependency(
+    require("path").relative(process.cwd(), "./src/dynamicFile.js"),
+  );
+
   await new Promise((r) => setTimeout(r, 1000));
 
   return content;
